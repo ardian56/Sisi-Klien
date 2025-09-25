@@ -102,3 +102,36 @@ const{dataArdian, dataBudi} = listMahasiswa2
 const [DataPemsik, DataDaspro] = mahasiswa.matKul;
 console.log(DataPemsik);
 console.log(DataDaspro);
+
+//ES6 - Spread Operator
+const mhs2 = {
+    nim: "A11.2022.14494",
+           nama: "Budi Haryanto",
+            umur: 40,
+            status: true,
+            matKul: [
+                {
+                    matkulId: 4704,
+                    matkulNama: "Pemsik",
+                    tugas: 95,
+                    uts: 100,
+                    uas: 50
+                },
+                {
+                    matkulId: 4771,
+                    matkulNama: "Daspro",
+                    tugas: 65,
+                    uts: 100,
+                    uas: 80
+                },
+            ]
+}
+
+const listMhs = { ...mahasiswa, mhs2};
+
+console.log(listMhs);
+
+//ES5 - Template Literal
+console.log("Nama saya " + nama + " dan NIM saya " + nim);
+//ES6
+console.log(`nama saya ${nama} nim saya ${nim}`);
