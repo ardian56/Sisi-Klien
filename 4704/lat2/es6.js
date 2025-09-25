@@ -143,3 +143,16 @@ function sum (a, b){
 
 const jml = (a, b) => a+b;
 console.log(`jumlah 10 + 8 = ${jml(10,8)}`);
+
+//ES6 - Method map, Filter, reduce
+const listNamaMhs = listMahasiswa2.map((m) => m.nama);
+
+console.log(listNamaMhs);
+
+//filter
+const mahasiswaAktif = listMahasiswa2.filter((m)=>m.status);
+console.log(mahasiswaAktif);
+
+//reduce
+const totalNilaiTugasAllMatkul = mahasiswa.matKul.reduce((total, m) => total + m.tugas, 0);
+console.log(totalNilaiTugasAllMatkul);
