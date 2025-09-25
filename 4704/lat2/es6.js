@@ -135,3 +135,11 @@ console.log(listMhs);
 console.log("Nama saya " + nama + " dan NIM saya " + nim);
 //ES6
 console.log(`nama saya ${nama} nim saya ${nim}`);
+
+//ES6 - Function
+function sum (a, b){
+    return a+b;
+}
+
+const jml = (a, b) => a+b;
+console.log(`jumlah 10 + 8 = ${jml(10,8)}`);
