@@ -8,6 +8,7 @@ import Heading from "@/Pages/Layouts/Components/Heading";
 import Form from "@/Pages/Layouts/Components/Form";
 
 import { dummyUser } from "@/Data/Dummy";
+import { showSuccess, showError } from "@/Utils/Helpers/toastHelper";
 
 const Login = () => {
   const handleSubmit = (e) => {
@@ -17,9 +18,12 @@ const Login = () => {
 
     if (email === dummyUser.email && password === dummyUser.password) {
       localStorage.setItem("user", JSON.stringify(dummyUser));
-      window.location.href = "/admin";
+      showSuccess("Login berhasil!");
+      setTimeout(() => {
+        window.location.href = "/admin";
+      }, 1200);
     } else {
-      alert("Email atau password salah!");
+      showError("Email atau password salah!");
     }
   };
 
