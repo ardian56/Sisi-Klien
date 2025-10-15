@@ -1,22 +1,15 @@
-// src/Pages/Layouts/Components/Modal.jsx
 
-import React from "react";
-import Button from "./Button";
-import Heading from "./Heading";
-
-const Modal = ({ isOpen, onClose, title, children }) => {
-  if (!isOpen) return null;
-
+const Modal = ({ onClose, children }) => {
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="bg-white rounded-lg shadow-lg w-full max-w-md">
-        <div className="flex justify-between items-center p-4 border-b">
-          <Heading as="h3" className="mb-0">{title}</Heading>
-          <button onClick={onClose} className="text-gray-600 hover:text-red-500 text-2xl">&times;</button>
-        </div>
-        <div className="p-4">
-          {children}
-        </div>
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+        {children}
+        <button
+          onClick={onClose}
+          className="mt-4 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded"
+        >
+          Tutup
+        </button>
       </div>
     </div>
   );
