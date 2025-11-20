@@ -6,6 +6,7 @@ const Header = () => {
     if (menu) menu.classList.toggle("hidden");
   };
 
+
   return (
     <header className="bg-white shadow-md">
       <div className="flex justify-between items-center px-6 py-4">

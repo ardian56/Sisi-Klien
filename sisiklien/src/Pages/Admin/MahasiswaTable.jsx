@@ -1,6 +1,6 @@
 import Button from "@/Pages/Layouts/Components/Button";
 
-const MahasiswaTable = ({ mahasiswa, openEditModal, onDelete }) => {
+const MahasiswaTable = ({ mahasiswa = [], openEditModal, onDelete, onDetail }) => {
   return (
     <table className="w-full text-sm text-gray-700">
       <thead className="bg-blue-600 text-white">
@@ -12,7 +12,7 @@ const MahasiswaTable = ({ mahasiswa, openEditModal, onDelete }) => {
         </tr>
       </thead>
       <tbody>
-        {mahasiswa.map((mhs, index) => (
+        {mahasiswa && mahasiswa.length > 0 ? mahasiswa.map((mhs, index) => (
           <tr
             key={mhs.nim}
             className={index % 2 === 0 ? "bg-white" : "bg-gray-100"}
@@ -21,12 +21,7 @@ const MahasiswaTable = ({ mahasiswa, openEditModal, onDelete }) => {
             <td className="py-2 px-4">{mhs.nama}</td>
             <td className="py-2 px-4">{mhs.status ? "Aktif" : "Tidak Aktif"}</td>
             <td className="py-2 px-4 text-center space-x-2">
-              <a
-                href={`/admin/mahasiswa/${mhs.nim}`}
-                className="inline-block bg-blue-600 hover:bg-blue-700 text-white text-sm px-3 py-1 rounded"
-              >
-                Detail
-              </a>
+              {onDetail && <Button onClick={() => onDetail(mhs.id)}>Detail</Button>}
               <Button
                 size="sm"
                 variant="warning"
@@ -34,16 +29,16 @@ const MahasiswaTable = ({ mahasiswa, openEditModal, onDelete }) => {
               >
                 Edit
               </Button>
-              <Button
-                size="sm"
-                variant="danger"
-                onClick={() => onDelete(mhs.nim)}
-              >
-                Hapus
-              </Button>
+              <Button size="sm" variant="danger" onClick={() => onDelete(mhs.id)}> Hapus </Button>
             </td>
           </tr>
-        ))}
+        )) : (
+          <tr>
+            <td colSpan="4" className="py-4 px-4 text-center text-gray-500">
+              Tidak ada data mahasiswa
+            </td>
+          </tr>
+        )}
       </tbody>
     </table>
   );

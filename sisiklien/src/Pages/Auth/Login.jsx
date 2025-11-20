@@ -7,24 +7,24 @@ import Card from "@/Pages/Layouts/Components/Card";
 import Heading from "@/Pages/Layouts/Components/Heading";
 import Form from "@/Pages/Layouts/Components/Form";
 import { useNavigate } from "react-router-dom";
-import { dummyUser } from "@/Data/Dummy";
+import { login } from "@/Utils/Apis/AuthApi";
 import { showSuccess, showError } from "@/Utils/Helpers/toastHelper";
 
 const Login = () => {
   const navigate = useNavigate();
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const email = e.target.email.value;
-    const password = e.target.password.value;
+    const formData = new FormData(e.target);
+    const email = formData.get("email");
+    const password = formData.get("password");
 
-    if (email === dummyUser.email && password === dummyUser.password) {
-      localStorage.setItem("user", JSON.stringify(dummyUser));
-      showSuccess("Login berhasil!");
-      setTimeout(() => {
-        navigate("/admin/dashboard");
-      }, 1200);
-    } else {
-      showError("Email atau password salah!");
+    try {
+      const user = await login(email, password);
+      localStorage.setItem("user", JSON.stringify(user));
+      showSuccess("Login berhasil");
+      navigate("/admin/dashboard");
+    } catch (err) {
+      showError(err.message);
     }
   };
 
