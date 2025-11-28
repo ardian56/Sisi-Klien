@@ -2,6 +2,8 @@ import React from "react";
 import { Toaster } from "react-hot-toast";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import './App.css';
 import Login from "./Pages/Auth/Login";
 import Dashboard from "./Pages/Admin/Dashboard";
@@ -12,6 +14,17 @@ import AuthLayout from "./Pages/Layouts/AuthLayout";
 import AdminLayout from "./Pages/Layouts/AdminLayout";
 import ProtectedRoute from "./Pages/Layouts/ProtectedRoute";
 import { AuthProvider } from "./Utils/Contexts/AuthContext";
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 5 * 60 * 1000, // 5 menit
+      gcTime: 10 * 60 * 1000, // 10 menit (dulu cacheTime)
+      refetchOnWindowFocus: false,
+      retry: 1,
+    },
+  },
+});
 
 const router = createBrowserRouter([
   {
@@ -54,9 +67,12 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <AuthProvider>
-      <Toaster position="top-right" reverseOrder={false} />
-      <RouterProvider router={router} />
-    </AuthProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <Toaster position="top-right" reverseOrder={false} />
+        <RouterProvider router={router} />
+        <ReactQueryDevtools initialIsOpen={false} />
+      </AuthProvider>
+    </QueryClientProvider>
   </React.StrictMode>
 );

@@ -1,34 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
 import Card from "@/Pages/Layouts/Components/Card";
 import Heading from "@/Pages/Layouts/Components/Heading";
-import { getMahasiswa } from "@/Utils/Apis/MahasiswaApi";
-import { showError } from "@/Utils/Helpers/toastHelper";
+import { useMahasiswa } from "@/Utils/Hooks/useMahasiswa";
 
 const MahasiswaDetail = () => {
   const { id } = useParams();
-  const [mahasiswa, setMahasiswa] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const { data: mahasiswaList = [] } = useMahasiswa();
+  const mahasiswa = mahasiswaList.find((m) => m.id === id);
 
-  useEffect(() => {
-    fetchMahasiswa();
-  }, [id]);
-
-  const fetchMahasiswa = async () => {
-    try {
-      const res = await getMahasiswa(id);
-      setMahasiswa(res.data);
-    } catch (err) {
-      showError("Gagal mengambil data mahasiswa");
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  if (loading) return <p className="text-center">Memuat data...</p>;
-
-  if (!mahasiswa) return <p className="text-center">Data tidak ditemukan</p>;
+  if (!mahasiswa) return (
+    <Card>
+      <p className="text-center py-8">Data tidak ditemukan</p>
+    </Card>
+  );
 
   return (
     <Card>
