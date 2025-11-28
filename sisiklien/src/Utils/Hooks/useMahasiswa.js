@@ -8,11 +8,15 @@ import {
 import { showSuccess, showError } from "../Helpers/toastHelper";
 
 // Ambil semua mahasiswa
-export const useMahasiswa = () =>
+export const useMahasiswa = (query = {}) =>
   useQuery({
-    queryKey: ["mahasiswa"],
-    queryFn: getAllMahasiswa,
-    select: (res) => res?.data ?? [],
+    queryKey: ["mahasiswa", query],
+    queryFn: () => getAllMahasiswa(query),
+    select: (res) => ({
+      data: res?.data ?? [],
+      total: parseInt(res?.headers["x-total-count"] ?? "0", 10),
+    }),
+    keepPreviousData: true,
   });
 
 // Tambah

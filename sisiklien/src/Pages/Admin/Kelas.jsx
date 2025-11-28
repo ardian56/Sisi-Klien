@@ -5,38 +5,31 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { confirmDialog } from "@/Utils/Helpers/swalHelper";
 import { useAuthStateContext } from "@/Utils/Contexts/AuthContext";
-import MahasiswaModal from "./MahasiswaModal";
-import MahasiswaTable from "./MahasiswaTable";
+import KelasTable from "./KelasTable";
+import KelasModal from "./KelasModal";
 import {
-  useMahasiswa,
-  useStoreMahasiswa,
-  useUpdateMahasiswa,
-  useDeleteMahasiswa,
-} from "@/Utils/Hooks/useMahasiswa";
-import { useKelas } from "@/Utils/Hooks/useKelas";
-import { useMataKuliah } from "@/Utils/Hooks/useMataKuliah";
+  useKelas,
+  useStoreKelas,
+  useUpdateKelas,
+  useDeleteKelas,
+} from "@/Utils/Hooks/useKelas";
 
-
-const Mahasiswa = () => {
+const Kelas = () => {
   const navigate = useNavigate();
   const { user } = useAuthStateContext();
   
-  // State utama
-  const [selectedMahasiswa, setSelectedMahasiswa] = useState(null);
+  const [selectedKelas, setSelectedKelas] = useState(null);
   const [isModalOpen, setModalOpen] = useState(false);
-
-  // Pagination, Search, Sort state
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(5);
   const [sort, setSort] = useState("nama");
   const [order, setOrder] = useState("asc");
   const [search, setSearch] = useState("");
 
-  // React Query hooks
   const {
     data: result = { data: [], total: 0 },
-    isLoading: isLoadingMahasiswa,
-  } = useMahasiswa({
+    isLoading,
+  } = useKelas({
     q: search,
     _sort: sort,
     _order: order,
@@ -44,44 +37,39 @@ const Mahasiswa = () => {
     _limit: perPage,
   });
 
-  const { data: mahasiswa = [] } = result;
+  const { data: kelas = [] } = result;
   const totalCount = result.total;
   const totalPages = Math.ceil(totalCount / perPage);
 
-  const { data: kelas = [] } = useKelas();
-  const { data: mataKuliah = [] } = useMataKuliah();
-  
-  const { mutate: store } = useStoreMahasiswa();
-  const { mutate: update } = useUpdateMahasiswa();
-  const { mutate: remove } = useDeleteMahasiswa();
+  const { mutate: store } = useStoreKelas();
+  const { mutate: update } = useUpdateKelas();
+  const { mutate: remove } = useDeleteKelas();
 
   const openAddModal = () => {
-    setSelectedMahasiswa(null);
+    setSelectedKelas(null);
     setModalOpen(true);
   };
 
-  const openEditModal = (nim) => {
-    const mhs = mahasiswa.find((m) => m.nim === nim);
-    setSelectedMahasiswa(mhs);
+  const openEditModal = (nama) => {
+    const kls = kelas.find((k) => k.nama === nama);
+    setSelectedKelas(kls);
     setModalOpen(true);
   };
 
   const handleSubmit = async (form) => {
-    if (selectedMahasiswa) {
-      // Update
+    if (selectedKelas) {
       const result = await confirmDialog({
         title: "Konfirmasi Update",
-        text: "Yakin ingin simpan perubahan data mahasiswa?",
+        text: "Yakin ingin simpan perubahan data kelas?",
         icon: "question",
         confirmButtonText: "Ya, Simpan",
         cancelButtonText: "Batal"
       });
       if (result.isConfirmed) {
-        update({ id: selectedMahasiswa.id, data: form });
+        update({ id: selectedKelas.id, data: form });
         setModalOpen(false);
       }
     } else {
-      // Create
       store(form);
       setModalOpen(false);
     }
@@ -90,7 +78,7 @@ const Mahasiswa = () => {
   const handleDelete = async (id) => {
     const result = await confirmDialog({
       title: "Konfirmasi Hapus",
-      text: "Yakin ingin hapus data mahasiswa ini?",
+      text: "Yakin ingin hapus data kelas ini?",
       icon: "warning",
       confirmButtonText: "Ya, Hapus",
       cancelButtonText: "Batal"
@@ -100,25 +88,22 @@ const Mahasiswa = () => {
     }
   };
 
-  // Pagination handlers
   const handlePrev = () => setPage((prev) => Math.max(prev - 1, 1));
   const handleNext = () => setPage((prev) => Math.min(prev + 1, totalPages));
 
   return (
     <Card>
       <div className="flex justify-between items-center mb-4">
-        <Heading as="h2" className="mb-0 text-left">Daftar Mahasiswa</Heading>
-        {user?.permission?.includes("mahasiswa.create") && (
-        <Button onClick={openAddModal}>+ Tambah Mahasiswa</Button>
+        <Heading as="h2" className="mb-0 text-left">Daftar Kelas</Heading>
+        {user?.permission?.includes("kelas.create") && (
+          <Button onClick={openAddModal}>+ Tambah Kelas</Button>
         )}
       </div>
 
-      {/* Search, Sort, Filter */}
       <div className="flex flex-wrap gap-2 mb-4">
-        {/* Search */}
         <input
           type="text"
-          placeholder="Cari nama/NIM..."
+          placeholder="Cari nama kelas..."
           className="border px-3 py-1 rounded flex-grow"
           value={search}
           onChange={(e) => {
@@ -127,7 +112,6 @@ const Mahasiswa = () => {
           }}
         />
 
-        {/* Sort By Field */}
         <select
           value={sort}
           onChange={(e) => {
@@ -137,11 +121,9 @@ const Mahasiswa = () => {
           className="border px-3 py-1 rounded"
         >
           <option value="nama">Sort by Nama</option>
-          <option value="nim">Sort by NIM</option>
-          <option value="max_sks">Sort by Max SKS</option>
+          <option value="tahun_ajaran">Sort by Tahun Ajaran</option>
         </select>
 
-        {/* Sort Order */}
         <select
           value={order}
           onChange={(e) => {
@@ -155,18 +137,17 @@ const Mahasiswa = () => {
         </select>
       </div>
 
-      {user?.permission?.includes("mahasiswa.read") && (
-      <MahasiswaTable 
-        mahasiswa={mahasiswa} 
-        openEditModal={openEditModal} 
-        onDelete={handleDelete}
-        onDetail={(id) => navigate(`/admin/mahasiswa/${id}`)}
-        user={user}
-        isLoading={isLoadingMahasiswa}
-      />
+      {user?.permission?.includes("kelas.read") && (
+        <KelasTable 
+          kelas={kelas} 
+          openEditModal={openEditModal} 
+          onDelete={handleDelete}
+          onDetail={(id) => navigate(`/admin/kelas/${id}`)}
+          user={user}
+          isLoading={isLoading}
+        />
       )}
 
-      {/* Pagination */}
       <div className="flex justify-between items-center mt-4">
         <p className="text-sm">
           Halaman {page} dari {totalPages}
@@ -188,15 +169,16 @@ const Mahasiswa = () => {
           </button>
         </div>
       </div>
-      <MahasiswaModal
+
+      <KelasModal
         isModalOpen={isModalOpen}
         onClose={() => setModalOpen(false)}
         onSubmit={handleSubmit}
-        selectedMahasiswa={selectedMahasiswa}
-        mahasiswaList={mahasiswa}
+        selectedKelas={selectedKelas}
+        kelasList={kelas}
       />
     </Card>
   );
 };
 
-export default Mahasiswa;
+export default Kelas;

@@ -9,6 +9,12 @@ import Login from "./Pages/Auth/Login";
 import Dashboard from "./Pages/Admin/Dashboard";
 import Mahasiswa from "./Pages/Admin/Mahasiswa";
 import MahasiswaDetail from "./Pages/Admin/MahasiswaDetail";
+import Dosen from "./Pages/Admin/Dosen";
+import DosenDetail from "./Pages/Admin/DosenDetail";
+import Kelas from "./Pages/Admin/Kelas";
+import KelasDetail from "./Pages/Admin/KelasDetail";
+import MataKuliah from "./Pages/Admin/MataKuliah";
+import MataKuliahDetail from "./Pages/Admin/MataKuliahDetail";
 import PageNotFound from "./Pages/PagesNotFound";
 import AuthLayout from "./Pages/Layouts/AuthLayout";
 import AdminLayout from "./Pages/Layouts/AdminLayout";
@@ -56,6 +62,30 @@ const router = createBrowserRouter([
       {
         path: "mahasiswa/:id",
         element: <MahasiswaDetail />,
+      },
+      {
+        path: "dosen",
+        element: <Dosen />,
+      },
+      {
+        path: "dosen/:id",
+        element: <DosenDetail />,
+      },
+      {
+        path: "kelas",
+        element: <Kelas />,
+      },
+      {
+        path: "kelas/:id",
+        element: <KelasDetail />,
+      },
+      {
+        path: "matakuliah",
+        element: <MataKuliah />,
+      },
+      {
+        path: "matakuliah/:id",
+        element: <MataKuliahDetail />,
       },
     ],
   },

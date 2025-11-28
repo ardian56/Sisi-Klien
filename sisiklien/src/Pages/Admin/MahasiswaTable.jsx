@@ -1,6 +1,14 @@
 import Button from "@/Pages/Layouts/Components/Button";
 
-const MahasiswaTable = ({ mahasiswa = [], openEditModal, onDelete, onDetail, user }) => {
+const MahasiswaTable = ({ mahasiswa = [], openEditModal, onDelete, onDetail, user, isLoading }) => {
+  if (isLoading) {
+    return (
+      <div className="text-center py-8">
+        <p>Loading...</p>
+      </div>
+    );
+  }
+
   return (
     <table className="w-full text-sm text-gray-700">
       <thead className="bg-blue-600 text-white">

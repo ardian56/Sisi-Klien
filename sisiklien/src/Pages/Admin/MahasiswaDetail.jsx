@@ -6,8 +6,8 @@ import { useMahasiswa } from "@/Utils/Hooks/useMahasiswa";
 
 const MahasiswaDetail = () => {
   const { id } = useParams();
-  const { data: mahasiswaList = [] } = useMahasiswa();
-  const mahasiswa = mahasiswaList.find((m) => m.id === id);
+  const { data: result = { data: [] } } = useMahasiswa();
+  const mahasiswa = result.data.find((m) => m.id === id);
 
   if (!mahasiswa) return (
     <Card>
