@@ -4,55 +4,50 @@
       "id": "1",
       "nama": "Andi",
       "nim": "A11.2020.00001",
-      "status": true
+      "status": true,
+      "max_sks": 24,
+      "kelas_id": "1"
     },
     {
       "id": "2",
       "nama": "Budi",
-      "nim": "A11.2020.00002"
+      "nim": "A11.2020.00002",
+      "max_sks": 20,
+      "kelas_id": "2"
     },
     {
       "id": "4c1a",
       "nim": "A11.2022.14493",
       "nama": "Ardian D",
-      "status": true
+      "status": true,
+      "max_sks": 24,
+      "kelas_id": "1"
     }
   ],
   "dosen": [
-    {
-      "id": "1",
-      "nidn": "0612108901",
-      "nama": "Dr. Ahmad Fauzi, M.Kom",
-      "email": "ahmad.fauzi@udinus.ac.id",
-      "no_telp": "081234567890"
-    },
     {
       "id": "2",
       "nidn": "0615078801",
       "nama": "Siti Nurhaliza, S.Kom., M.T",
       "email": "siti.nurhaliza@udinus.ac.id",
-      "no_telp": "081234567891"
+      "no_telp": "081234567891",
+      "max_sks": 10
     },
     {
       "id": "3",
       "nidn": "0620119002",
       "nama": "Budi Santoso, M.Kom",
       "email": "budi.santoso@udinus.ac.id",
-      "no_telp": "081234567892"
+      "no_telp": "081234567892",
+      "max_sks": 12
     },
     {
       "id": "4",
       "nidn": "0625088502",
       "nama": "Dr. Rina Fitriana, M.Sc",
       "email": "rina.fitriana@udinus.ac.id",
-      "no_telp": "081234567893"
-    },
-    {
-      "id": "5",
-      "nidn": "0618099201",
-      "nama": "Agus Setiawan, S.T., M.Kom",
-      "email": "agus.setiawan@udinus.ac.id",
-      "no_telp": "081234567894"
+      "no_telp": "081234567893",
+      "max_sks": 14
     }
   ],
   "kelas": [
@@ -60,31 +55,59 @@
       "id": "1",
       "nama": "A11.4501",
       "tahun_ajaran": "2024/2025",
-      "semester": "Ganjil"
+      "semester": "Ganjil",
+      "matakuliah_list": [
+        {
+          "matakuliah_id": "2",
+          "dosen_id": "2"
+        },
+        {
+          "matakuliah_id": "3",
+          "dosen_id": "3"
+        }
+      ]
     },
     {
       "id": "2",
       "nama": "A11.4502",
       "tahun_ajaran": "2024/2025",
-      "semester": "Ganjil"
+      "semester": "Ganjil",
+      "matakuliah_list": [
+        {
+          "matakuliah_id": "1",
+          "dosen_id": "1"
+        },
+        {
+          "matakuliah_id": "4",
+          "dosen_id": "4"
+        }
+      ]
     },
     {
       "id": "3",
       "nama": "A11.4503",
       "tahun_ajaran": "2024/2025",
-      "semester": "Ganjil"
+      "semester": "Ganjil",
+      "matakuliah_list": [
+        {
+          "matakuliah_id": "5",
+          "dosen_id": "5"
+        }
+      ]
     },
     {
       "id": "4",
       "nama": "A11.4601",
       "tahun_ajaran": "2024/2025",
-      "semester": "Genap"
+      "semester": "Genap",
+      "matakuliah_list": []
     },
     {
       "id": "5",
       "nama": "A11.4602",
       "tahun_ajaran": "2024/2025",
-      "semester": "Genap"
+      "semester": "Genap",
+      "matakuliah_list": []
     }
   ],
   "matakuliah": [
@@ -92,37 +115,51 @@
       "id": "1",
       "kode": "A11.54501",
       "nama": "Pemrograman Web",
-      "sks": 3
+      "sks": 3,
+      "semester": 3,
+      "prasyarat": []
     },
     {
       "id": "2",
       "kode": "A11.54502",
       "nama": "Basis Data",
-      "sks": 3
+      "sks": 3,
+      "semester": 3,
+      "prasyarat": []
     },
     {
       "id": "3",
       "kode": "A11.54503",
       "nama": "Algoritma dan Struktur Data",
-      "sks": 4
+      "sks": 4,
+      "semester": 2,
+      "prasyarat": []
     },
     {
       "id": "4",
       "kode": "A11.54504",
       "nama": "Pemrograman Berorientasi Objek",
-      "sks": 3
+      "sks": 3,
+      "semester": 4,
+      "prasyarat": [
+        "1"
+      ]
     },
     {
       "id": "5",
       "kode": "A11.54505",
       "nama": "Sistem Operasi",
-      "sks": 3
+      "sks": 3,
+      "semester": 4,
+      "prasyarat": []
     },
     {
       "id": "6",
       "kode": "A11.54506",
       "nama": "Jaringan Komputer",
-      "sks": 3
+      "sks": 3,
+      "semester": 5,
+      "prasyarat": []
     }
   ],
   "user": [
@@ -153,7 +190,10 @@
         "matakuliah.read",
         "matakuliah.create",
         "matakuliah.update",
-        "matakuliah.delete"
+        "matakuliah.delete",
+        "krs.approval",
+        "krs.read",
+        "krs.update"
       ]
     },
     {
@@ -164,8 +204,189 @@
       "role": "mahasiswa",
       "permission": [
         "krs.page",
-        "krs.read"
+        "krs.read",
+        "krs.create"
       ]
+    }
+  ],
+  "krs": [
+    {
+      "id": "1",
+      "mahasiswa_id": "1",
+      "semester": "2024/2025 Ganjil",
+      "status": "approved",
+      "total_sks": 13,
+      "matakuliah": [
+        {
+          "matakuliah_id": "1",
+          "kode": "A11.54501",
+          "nama": "Pemrograman Web",
+          "sks": 3
+        },
+        {
+          "matakuliah_id": "2",
+          "kode": "A11.54502",
+          "nama": "Basis Data",
+          "sks": 3
+        },
+        {
+          "matakuliah_id": "3",
+          "kode": "A11.54503",
+          "nama": "Algoritma dan Struktur Data",
+          "sks": 4
+        },
+        {
+          "matakuliah_id": "5",
+          "kode": "A11.54505",
+          "nama": "Sistem Operasi",
+          "sks": 3
+        }
+      ],
+      "submitted_at": "2024-11-15T10:30:00Z",
+      "approved_at": "2024-11-16T14:20:00Z",
+      "approved_by": "1"
+    },
+    {
+      "id": "2",
+      "mahasiswa_id": "2",
+      "semester": "2024/2025 Ganjil",
+      "status": "submitted",
+      "total_sks": 10,
+      "matakuliah": [
+        {
+          "matakuliah_id": "1",
+          "kode": "A11.54501",
+          "nama": "Pemrograman Web",
+          "sks": 3
+        },
+        {
+          "matakuliah_id": "2",
+          "kode": "A11.54502",
+          "nama": "Basis Data",
+          "sks": 3
+        },
+        {
+          "matakuliah_id": "3",
+          "kode": "A11.54503",
+          "nama": "Algoritma dan Struktur Data",
+          "sks": 4
+        }
+      ],
+      "submitted_at": "2024-11-20T09:15:00Z"
+    },
+    {
+      "id": "3",
+      "mahasiswa_id": "4c1a",
+      "semester": "2024/2025 Ganjil",
+      "status": "draft",
+      "total_sks": 6,
+      "matakuliah": [
+        {
+          "matakuliah_id": "1",
+          "kode": "A11.54501",
+          "nama": "Pemrograman Web",
+          "sks": 3
+        },
+        {
+          "matakuliah_id": "6",
+          "kode": "A11.54506",
+          "nama": "Jaringan Komputer",
+          "sks": 3
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "mahasiswa_id": "1",
+      "semester": "2024/2025 Genap",
+      "status": "rejected",
+      "total_sks": 16,
+      "matakuliah": [
+        {
+          "matakuliah_id": "4",
+          "kode": "A11.54504",
+          "nama": "Pemrograman Berorientasi Objek",
+          "sks": 3
+        },
+        {
+          "matakuliah_id": "5",
+          "kode": "A11.54505",
+          "nama": "Sistem Operasi",
+          "sks": 3
+        },
+        {
+          "matakuliah_id": "6",
+          "kode": "A11.54506",
+          "nama": "Jaringan Komputer",
+          "sks": 3
+        },
+        {
+          "matakuliah_id": "1",
+          "kode": "A11.54501",
+          "nama": "Pemrograman Web",
+          "sks": 3
+        },
+        {
+          "matakuliah_id": "3",
+          "kode": "A11.54503",
+          "nama": "Algoritma dan Struktur Data",
+          "sks": 4
+        }
+      ],
+      "submitted_at": "2024-11-10T11:00:00Z",
+      "rejected_at": "2024-11-11T16:45:00Z",
+      "rejected_by": "1",
+      "rejection_reason": "Total SKS melebihi batas maksimum. Silakan kurangi mata kuliah yang diambil."
+    },
+    {
+      "id": "d17f",
+      "mahasiswa_id": "2",
+      "semester": "2024/2025 Ganjil",
+      "status": "submitted",
+      "total_sks": 6,
+      "matakuliah": [
+        {
+          "matakuliah_id": "1",
+          "kode": "A11.54501",
+          "nama": "Pemrograman Web",
+          "sks": 3
+        },
+        {
+          "matakuliah_id": "2",
+          "kode": "A11.54502",
+          "nama": "Basis Data",
+          "sks": 3
+        }
+      ],
+      "submitted_at": "2025-11-28T12:16:13.891Z"
+    },
+    {
+      "id": "fffa",
+      "mahasiswa_id": "2",
+      "semester": "2024/2025 Ganjil",
+      "status": "submitted",
+      "total_sks": 10,
+      "matakuliah": [
+        {
+          "matakuliah_id": "1",
+          "kode": "A11.54501",
+          "nama": "Pemrograman Web",
+          "sks": 3
+        },
+        {
+          "matakuliah_id": "2",
+          "kode": "A11.54502",
+          "nama": "Basis Data",
+          "sks": 3
+        },
+        {
+          "matakuliah_id": "3",
+          "kode": "A11.54503",
+          "nama": "Algoritma dan Struktur Data",
+          "sks": 4
+        }
+      ],
+      "submitted_at": "2025-11-28T12:16:27.227Z"
     }
   ]
 }

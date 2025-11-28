@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   getAllKelas,
+  getKelas,
   storeKelas,
   updateKelas,
   deleteKelas,
@@ -17,6 +18,17 @@ export const useKelas = (query = {}) =>
       total: parseInt(res?.headers["x-total-count"] ?? "0", 10),
     }),
     keepPreviousData: true,
+  });
+
+// Ambil detail kelas by ID
+export const useKelasDetail = (id) =>
+  useQuery({
+    queryKey: ["kelas", id],
+    queryFn: () => getKelas(id),
+    select: (res) => res?.data,
+    enabled: !!id,
+    staleTime: 5 * 60 * 1000,
+    gcTime: 10 * 60 * 1000,
   });
 
 // Tambah

@@ -15,6 +15,8 @@ import Kelas from "./Pages/Admin/Kelas";
 import KelasDetail from "./Pages/Admin/KelasDetail";
 import MataKuliah from "./Pages/Admin/MataKuliah";
 import MataKuliahDetail from "./Pages/Admin/MataKuliahDetail";
+import KrsMahasiswa from "./Pages/Admin/KrsMahasiswa";
+import KrsAdmin from "./Pages/Admin/KrsAdmin";
 import PageNotFound from "./Pages/PagesNotFound";
 import AuthLayout from "./Pages/Layouts/AuthLayout";
 import AdminLayout from "./Pages/Layouts/AdminLayout";
@@ -86,6 +88,14 @@ const router = createBrowserRouter([
       {
         path: "matakuliah/:id",
         element: <MataKuliahDetail />,
+      },
+      {
+        path: "krs",
+        element: <KrsMahasiswa />,
+      },
+      {
+        path: "krs-approval",
+        element: <KrsAdmin />,
       },
     ],
   },

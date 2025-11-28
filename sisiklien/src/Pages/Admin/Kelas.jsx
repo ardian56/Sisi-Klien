@@ -13,6 +13,7 @@ import {
   useUpdateKelas,
   useDeleteKelas,
 } from "@/Utils/Hooks/useKelas";
+import { useMahasiswa } from "@/Utils/Hooks/useMahasiswa";
 
 const Kelas = () => {
   const navigate = useNavigate();
@@ -40,6 +41,8 @@ const Kelas = () => {
   const { data: kelas = [] } = result;
   const totalCount = result.total;
   const totalPages = Math.ceil(totalCount / perPage);
+
+  const { data: mahasiswaData } = useMahasiswa();
 
   const { mutate: store } = useStoreKelas();
   const { mutate: update } = useUpdateKelas();
@@ -145,6 +148,7 @@ const Kelas = () => {
           onDetail={(id) => navigate(`/admin/kelas/${id}`)}
           user={user}
           isLoading={isLoading}
+          mahasiswaData={mahasiswaData}
         />
       )}
 
