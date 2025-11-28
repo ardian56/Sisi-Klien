@@ -1,6 +1,6 @@
 import Button from "@/Pages/Layouts/Components/Button";
 
-const MahasiswaTable = ({ mahasiswa = [], openEditModal, onDelete, onDetail }) => {
+const MahasiswaTable = ({ mahasiswa = [], openEditModal, onDelete, onDetail, user }) => {
   return (
     <table className="w-full text-sm text-gray-700">
       <thead className="bg-blue-600 text-white">
@@ -22,6 +22,7 @@ const MahasiswaTable = ({ mahasiswa = [], openEditModal, onDelete, onDetail }) =
             <td className="py-2 px-4">{mhs.status ? "Aktif" : "Tidak Aktif"}</td>
             <td className="py-2 px-4 text-center space-x-2">
               {onDetail && <Button onClick={() => onDetail(mhs.id)}>Detail</Button>}
+              {user?.permission?.includes("mahasiswa.update") && (
               <Button
                 size="sm"
                 variant="warning"
@@ -29,7 +30,10 @@ const MahasiswaTable = ({ mahasiswa = [], openEditModal, onDelete, onDetail }) =
               >
                 Edit
               </Button>
+              )}
+            {user?.permission?.includes("mahasiswa.delete") && (
               <Button size="sm" variant="danger" onClick={() => onDelete(mhs.id)}> Hapus </Button>
+              )}
             </td>
           </tr>
         )) : (

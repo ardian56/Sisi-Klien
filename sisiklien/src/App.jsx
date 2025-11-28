@@ -11,6 +11,7 @@ import PageNotFound from "./Pages/PagesNotFound";
 import AuthLayout from "./Pages/Layouts/AuthLayout";
 import AdminLayout from "./Pages/Layouts/AdminLayout";
 import ProtectedRoute from "./Pages/Layouts/ProtectedRoute";
+import { AuthProvider } from "./Utils/Contexts/AuthContext";
 
 const router = createBrowserRouter([
   {
@@ -53,9 +54,9 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <>
+    <AuthProvider>
       <Toaster position="top-right" reverseOrder={false} />
       <RouterProvider router={router} />
-    </>
+    </AuthProvider>
   </React.StrictMode>
 );

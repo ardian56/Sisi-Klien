@@ -6,12 +6,17 @@ import Link from "@/Pages/Layouts/Components/Link";
 import Card from "@/Pages/Layouts/Components/Card";
 import Heading from "@/Pages/Layouts/Components/Heading";
 import Form from "@/Pages/Layouts/Components/Form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 import { login } from "@/Utils/Apis/AuthApi";
 import { showSuccess, showError } from "@/Utils/Helpers/toastHelper";
+import { useAuthStateContext } from "@/Utils/Contexts/AuthContext";
 
 const Login = () => {
   const navigate = useNavigate();
+  const { user, setUser } = useAuthStateContext();
+
+  if (user) return <Navigate to="/admin/dashboard" />;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -19,12 +24,12 @@ const Login = () => {
     const password = formData.get("password");
 
     try {
-      const user = await login(email, password);
-      localStorage.setItem("user", JSON.stringify(user));
+      const userData = await login(email, password);
+      setUser(userData);
       showSuccess("Login berhasil");
       navigate("/admin/dashboard");
     } catch (err) {
-      showError(err.message);
+      showError(err.message || "Login gagal");
     }
   };
 

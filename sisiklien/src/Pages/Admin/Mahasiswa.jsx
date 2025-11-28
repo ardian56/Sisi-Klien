@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { confirmDialog } from "@/Utils/Helpers/swalHelper";
 import { showSuccess, showError } from "@/Utils/Helpers/toastHelper";
+import { useAuthStateContext } from "@/Utils/Contexts/AuthContext";
 import MahasiswaModal from "./MahasiswaModal";
 import MahasiswaTable from "./MahasiswaTable";
 import {
@@ -17,6 +18,7 @@ import {
 
 const Mahasiswa = () => {
   const navigate = useNavigate();
+  const { user } = useAuthStateContext();
   
   // State utama
   const [mahasiswa, setMahasiswa] = useState([]);
@@ -104,14 +106,19 @@ const Mahasiswa = () => {
     <Card>
       <div className="flex justify-between items-center mb-4">
         <Heading as="h2" className="mb-0 text-left">Daftar Mahasiswa</Heading>
+        {user?.permission?.includes("mahasiswa.create") && (
         <Button onClick={openAddModal}>+ Tambah Mahasiswa</Button>
+        )}
       </div>
+      {user?.permission?.includes("mahasiswa.read") && (
       <MahasiswaTable 
         mahasiswa={mahasiswa} 
         openEditModal={openEditModal} 
         onDelete={handleDelete}
         onDetail={(id) => navigate(`/admin/mahasiswa/${id}`)}
+        user={user}
       />
+      )}
       <MahasiswaModal
         isModalOpen={isModalOpen}
         onClose={() => setModalOpen(false)}
